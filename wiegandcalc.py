@@ -1,0 +1,56 @@
+###################################
+###	Author:	Vallinayagam.K	###
+###	Date:	09/10/2016	###
+###################################
+
+#!/usr/bin/python
+
+import sys
+
+class conversion:
+	
+	def __init__(self):
+		if len(sys.argv) != 3:                                   
+			print "Enter Facility code & Card number in the respective fields without space! "
+		else:
+			self.facility = int(sys.argv[1])
+			self.cardnumber = int(sys.argv[2])
+			
+
+	def facilitycode(self):
+		self.facbits =  bin(self.facility).split("b")[1]
+		self.lenfacilitybits = len(self.facbits) 
+		self.facbitdiff =  8 - self.lenfacilitybits
+		if self.facbitdiff != 0:
+			self.facbits = (self.facbitdiff*"0")+str(self.facbits)
+			return self.facbits
+		else:
+			return self.facbits
+			
+
+
+	def card(self):
+		self.cardbits = bin(self.cardnumber).split("b")[1]
+		self.lencardbits = len(self.cardbits)
+		self.cardbitdiff = 16 - self.lencardbits
+		if self.cardbitdiff != 0:
+			self.cardbits = (self.cardbitdiff*"0")+str(self.cardbits)
+			return self.cardbits
+		else:
+			return self.cardbits
+
+
+	def parity(self):
+		self.totalbits =  self.facilitycode() + self.card()
+		self.even,self.odd = self.totalbits[:len(self.totalbits)/2], self.totalbits[len(self.totalbits)/2:]
+		return int(self.even,2), int(self.odd,2)
+
+
+if __name__ == "__main__":
+	a = conversion()
+	print a.facilitycode()
+	print a.card()
+	print a.parity()
+ 
+
+
