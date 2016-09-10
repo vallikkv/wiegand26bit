@@ -4,9 +4,11 @@
 ###	Date:	09/10/2016	###
 ###################################
 
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import sys
+from subprocess import call
+import os
 
 
 class conversion:
@@ -17,6 +19,8 @@ class conversion:
         else:
             self.facility = int(sys.argv[1])
             self.cardnumber = int(sys.argv[2])
+            self.facilitycode()
+            self.card()
 
     def facilitycode(self):
         self.facbits = bin(self.facility).split("b")[1]
@@ -62,11 +66,12 @@ class conversion:
         else:
             self.even = "1" + self.even
 
-        return int(self.even+self.odd, 2)
+        return call(['sudo', '/home/pi/temp1', str(int(self.even+self.odd,2))])
+	#return self.even+self.odd
+
 
 
 if __name__ == "__main__":
     a = conversion()
-    a.facilitycode()
-    a.card()
     print a.parity()
+
